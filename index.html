@@ -1,0 +1,1528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amber</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+  <!-- AMBER — Home Page -->
+  <main class="amber-home" aria-label="Amber home page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Motivation + progress for beginner developers</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home" aria-current="page">Home</a>
+        <a class="nav-link" href="#space">Your Space</a>
+        <a class="nav-link" href="#map">Future Map</a>
+        <a class="nav-link" href="#goals">Goals</a>
+        <a class="nav-link" href="#refresh">Refresh</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <h2 id="hero-title" class="hero-title">
+          Keep learning even when it feels scary.
+        </h2>
+
+        <p class="hero-subtitle">
+          Amber helps beginners track what they’ve learned, see their next steps, and stay consistent
+          with a gentle streak + a growing pet.
+        </p>
+
+        <div class="hero-actions" role="group" aria-label="Quick actions">
+          <button class="btn btn-primary" type="button">
+            <span class="ico" aria-hidden="true">📝</span>
+            Log a session
+          </button>
+          <button class="btn btn-secondary" type="button">
+            <span class="ico" aria-hidden="true">✨</span>
+            Mark a small win
+          </button>
+          <button class="btn btn-ghost" type="button">
+            <span class="ico" aria-hidden="true">🧭</span>
+            See next steps
+          </button>
+        </div>
+
+        <div class="hero-note" role="note">
+          <div class="note-ico" aria-hidden="true">💡</div>
+          <div>
+            <strong>Tip:</strong> Progress counts even if you only studied 5 minutes.
+            Consistency beats intensity.
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-right" aria-label="Daily snapshot">
+        <div class="snapshot">
+          <p class="snapshot-title">Today’s snapshot</p>
+
+          <dl class="snapshot-grid">
+            <div class="snapshot-item">
+              <dt class="snapshot-label">Minutes studied</dt>
+              <dd class="snapshot-value" id="todayMinutes">—</dd>
+            </div>
+
+            <div class="snapshot-item">
+              <dt class="snapshot-label">Topics learned</dt>
+              <dd class="snapshot-value" id="todayTopics">—</dd>
+            </div>
+
+            <div class="snapshot-item">
+              <dt class="snapshot-label">Streak status</dt>
+              <dd class="snapshot-value" id="todayStreak">—</dd>
+            </div>
+
+            <div class="snapshot-item">
+              <dt class="snapshot-label">Mood</dt>
+              <dd class="snapshot-value" id="todayMood">—</dd>
+            </div>
+          </dl>
+
+          <p class="snapshot-hint">
+            (This will update automatically once we add JavaScript.)
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="cards" aria-label="Progress cards">
+      <article class="card" aria-label="Streak card">
+        <div class="card-header">
+          <div>
+            <p class="card-kicker">Streak</p>
+            <h3 class="card-title"><span id="streakDays">0</span> days</h3>
+          </div>
+          <div class="card-icon" aria-hidden="true">🔥</div>
+        </div>
+
+        <p class="card-text" id="streakStatus">
+          Log something today to start your streak.
+        </p>
+
+        <footer class="card-footer">
+          <button class="btn btn-small btn-primary" type="button">
+            <span class="ico" aria-hidden="true">⚡</span>
+            Quick log
+          </button>
+          <button class="btn btn-small btn-ghost" type="button">
+            <span class="ico" aria-hidden="true">📌</span>
+            Streak rules
+          </button>
+        </footer>
+      </article>
+
+      <article class="card pet-card pet--egg" aria-label="Pet card">
+        <div class="card-header">
+          <div>
+            <p class="card-kicker">Your pet</p>
+            <h3 class="card-title">
+              <span>Level <span id="petLevel">1</span></span>
+            </h3>
+          </div>
+          <div class="card-icon" aria-hidden="true">🐣</div>
+        </div>
+
+        <div class="pet-figure" aria-label="Pet preview">
+          <div class="pet-emoji" id="petEmoji" aria-label="Pet emoji">🥚</div>
+        </div>
+
+        <p class="card-text">
+          Your pet grows when you show up. Lose the streak and it turns to ashes — but you can always restart.
+        </p>
+
+        <div class="progress" aria-label="Pet XP progress">
+          <div class="progress-row">
+            <span class="progress-label">XP</span>
+            <span class="progress-value" id="petXP">0</span>
+          </div>
+
+          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="50">
+            <div class="progress-fill" style="width: 0%;"></div>
+          </div>
+
+          <p class="progress-hint">Next level at 50 XP</p>
+        </div>
+
+        <footer class="card-footer">
+          <button class="btn btn-small btn-secondary" type="button">
+            <span class="ico" aria-hidden="true">🍓</span>
+            Feed pet
+          </button>
+          <button class="btn btn-small btn-ghost" type="button">
+            <span class="ico" aria-hidden="true">🎨</span>
+            Customize
+          </button>
+        </footer>
+      </article>
+
+      <article class="card" aria-label="Learned topics card">
+        <div class="card-header">
+          <div>
+            <p class="card-kicker">Learned topics</p>
+            <h3 class="card-title"><span id="learnedCount">0</span> total</h3>
+          </div>
+          <div class="card-icon" aria-hidden="true">🧠</div>
+        </div>
+
+        <p class="card-text">
+          Track confidence so you can review what’s shaky — and celebrate what’s solid.
+        </p>
+
+        <div class="pill-row" aria-label="Confidence summary">
+          <span class="pill">Low: <strong id="lowConfCount">0</strong></span>
+          <span class="pill">Mid: <strong id="midConfCount">0</strong></span>
+          <span class="pill">High: <strong id="highConfCount">0</strong></span>
+        </div>
+
+        <footer class="card-footer">
+          <button class="btn btn-small btn-primary" type="button">
+            <span class="ico" aria-hidden="true">📚</span>
+            Open Your Space
+          </button>
+          <button class="btn btn-small btn-ghost" type="button">
+            <span class="ico" aria-hidden="true">🔁</span>
+            Review weak topics
+          </button>
+        </footer>
+      </article>
+    </section>
+
+    <section class="motivation" aria-labelledby="motivation-title">
+      <h2 id="motivation-title">Your progress is bigger than it feels.</h2>
+
+      <div class="motivation-grid">
+        <article class="panel">
+          <h3 class="panel-title">✅ What counts as progress?</h3>
+          <ul class="panel-list">
+            <li>Studied 5 minutes</li>
+            <li>Fixed one error</li>
+            <li>Understood one concept</li>
+            <li>Wrote one function</li>
+            <li>Asked a question</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <h3 class="panel-title">🎯 Today’s tiny plan</h3>
+          <ol class="panel-list">
+            <li>Pick one topic</li>
+            <li>Do one tiny exercise</li>
+            <li>Log it</li>
+            <li>Get your next step</li>
+          </ol>
+        </article>
+
+        <article class="panel">
+          <h3 class="panel-title">✨ Micro message</h3>
+          <p class="panel-text" id="microMessage">
+            “You don’t need confidence to start. You gain confidence by continuing.”
+          </p>
+          <button class="btn btn-small btn-ghost" type="button">
+            <span class="ico" aria-hidden="true">🔄</span>
+            New message
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Amber (demo) • Built for a productivity hackathon • Data/features can be added later with JavaScript.
+      </p>
+    </footer>
+  </main>
+
+
+  <!-- AMBER — Your Space Page -->
+  <main class="amber-space" aria-label="Amber Your Space page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Your Space — what you’ve learned & how confident you feel</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#space" aria-current="page">Your Space</a>
+        <a class="nav-link" href="#map">Future Map</a>
+        <a class="nav-link" href="#goals">Goals</a>
+        <a class="nav-link" href="#refresh">Refresh</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="page-head" aria-labelledby="space-title">
+      <div class="page-head-left">
+        <h2 id="space-title" class="page-title">Your Space</h2>
+        <p class="page-subtitle">
+          Keep a clean record of what you learned. Add confidence (1–5) so you know what to review.
+        </p>
+      </div>
+
+      <aside class="page-head-right" aria-label="Quick stats">
+        <div class="statline">
+          <span class="statlabel">Learned topics</span>
+          <strong class="statvalue" id="spaceLearnedCount">0</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Low confidence</span>
+          <strong class="statvalue" id="spaceLowConf">0</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Last session</span>
+          <strong class="statvalue" id="spaceLastSession">—</strong>
+        </div>
+        <p class="tinyhint">(Values become real after adding JS.)</p>
+      </aside>
+    </section>
+
+    <section class="panel" aria-labelledby="add-topic-title">
+      <header class="panel-head">
+        <h3 id="add-topic-title" class="panel-title">Add a learned topic</h3>
+        <p class="panel-hint">Fast logging. You can polish later.</p>
+      </header>
+
+      <form class="form" aria-label="Add learned topic form">
+        <div class="form-grid">
+          <label class="field">
+            <span class="field-label">Topic name</span>
+            <input
+              class="field-input"
+              type="text"
+              name="topicName"
+              placeholder="e.g., Loops, Arrays, HTTP, SQL JOIN"
+              autocomplete="off"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Category</span>
+            <select class="field-input" name="category">
+              <option value="core">Core programming</option>
+              <option value="language">Language basics</option>
+              <option value="tools">Tools (Git, IDE)</option>
+              <option value="web">Web (HTTP, REST)</option>
+              <option value="db">Databases (SQL)</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Confidence</span>
+            <select class="field-input" name="confidence" aria-label="Confidence level">
+              <option value="1">1 — shaky</option>
+              <option value="2">2 — uncertain</option>
+              <option value="3" selected>3 — okay</option>
+              <option value="4">4 — good</option>
+              <option value="5">5 — solid</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Learned date</span>
+            <input class="field-input" type="date" name="learnedDate" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Notes (optional)</span>
+          <textarea
+            class="field-input"
+            name="notes"
+            placeholder="What clicked? What was confusing? What example helped?"
+            rows="4"
+          ></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Save topic</button>
+          <button class="btn btn-secondary" type="button">Quick add from list</button>
+          <button class="btn btn-ghost" type="reset">Clear</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="library-title">
+      <header class="panel-head">
+        <h3 id="library-title" class="panel-title">Your topic library</h3>
+        <p class="panel-hint">
+          Search, filter by confidence, and pick what to review.
+        </p>
+      </header>
+
+      <div class="toolbar" role="region" aria-label="Topic filters">
+        <label class="field small">
+          <span class="field-label">Search</span>
+          <input class="field-input" type="search" placeholder="Search topics..." />
+        </label>
+
+        <label class="field small">
+          <span class="field-label">Confidence</span>
+          <select class="field-input">
+            <option value="all">All</option>
+            <option value="low">Low (1–2)</option>
+            <option value="mid">Mid (3)</option>
+            <option value="high">High (4–5)</option>
+          </select>
+        </label>
+
+        <label class="field small">
+          <span class="field-label">Sort</span>
+          <select class="field-input">
+            <option value="recent">Most recent</option>
+            <option value="confLow">Confidence: low → high</option>
+            <option value="confHigh">Confidence: high → low</option>
+            <option value="name">Name (A–Z)</option>
+          </select>
+        </label>
+
+        <div class="toolbar-actions" role="group" aria-label="Library actions">
+          <button class="btn btn-small" type="button">Review weak topics</button>
+          <button class="btn btn-small btn-ghost" type="button">Export</button>
+        </div>
+      </div>
+
+      <div class="topic-list" role="list" aria-label="Learned topics list">
+        <article class="topic-item" role="listitem" aria-label="Topic item">
+          <div class="topic-main">
+            <h4 class="topic-name">Loops</h4>
+            <p class="topic-meta">Core programming • Learned: 2025-12-13</p>
+            <div class="topic-tags" aria-label="Topic tags">
+              <span class="tag">Confidence: 3/5</span>
+              <span class="tag tag-warn">Needs review</span>
+            </div>
+          </div>
+          <div class="topic-actions" role="group" aria-label="Topic actions">
+            <button class="btn btn-small" type="button">Edit</button>
+            <button class="btn btn-small btn-ghost" type="button">Mark for quiz</button>
+          </div>
+        </article>
+
+        <article class="topic-item" role="listitem" aria-label="Topic item">
+          <div class="topic-main">
+            <h4 class="topic-name">Functions</h4>
+            <p class="topic-meta">Core programming • Learned: 2025-12-12</p>
+            <div class="topic-tags" aria-label="Topic tags">
+              <span class="tag">Confidence: 4/5</span>
+              <span class="tag tag-good">Solid</span>
+            </div>
+          </div>
+          <div class="topic-actions" role="group" aria-label="Topic actions">
+            <button class="btn btn-small" type="button">Edit</button>
+            <button class="btn btn-small btn-ghost" type="button">Mark for quiz</button>
+          </div>
+        </article>
+
+        <article class="topic-item" role="listitem" aria-label="Topic item">
+          <div class="topic-main">
+            <h4 class="topic-name">Git basics</h4>
+            <p class="topic-meta">Tools • Learned: 2025-12-10</p>
+            <div class="topic-tags" aria-label="Topic tags">
+              <span class="tag">Confidence: 2/5</span>
+              <span class="tag tag-warn">Needs review</span>
+            </div>
+          </div>
+          <div class="topic-actions" role="group" aria-label="Topic actions">
+            <button class="btn btn-small" type="button">Edit</button>
+            <button class="btn btn-small btn-ghost" type="button">Mark for quiz</button>
+          </div>
+        </article>
+      </div>
+
+      <nav class="pager" aria-label="Topic list pagination">
+        <button class="btn btn-small btn-ghost" type="button" aria-label="Previous page">← Prev</button>
+        <span class="pager-info">Page 1 of 1</span>
+        <button class="btn btn-small btn-ghost" type="button" aria-label="Next page">Next →</button>
+      </nav>
+    </section>
+
+    <section class="panel" aria-labelledby="quiz-title">
+      <header class="panel-head">
+        <h3 id="quiz-title" class="panel-title">Quiz builder</h3>
+        <p class="panel-hint">
+          Select topics you learned and generate a quiz. (AI version later; demo quiz can be template-based.)
+        </p>
+      </header>
+
+      <div class="quiz-grid">
+        <div class="quiz-left">
+          <h4 class="mini-title">Selected topics</h4>
+          <div class="chip-row" aria-label="Selected topics chips">
+            <span class="chip">Loops</span>
+            <span class="chip">Git basics</span>
+            <span class="chip chip-muted">+ Add more</span>
+          </div>
+
+          <div class="quiz-options" aria-label="Quiz options">
+            <label class="field small">
+              <span class="field-label">Questions</span>
+              <select class="field-input">
+                <option>5</option>
+                <option>10</option>
+                <option>15</option>
+              </select>
+            </label>
+
+            <label class="field small">
+              <span class="field-label">Difficulty</span>
+              <select class="field-input">
+                <option>Easy</option>
+                <option selected>Medium</option>
+                <option>Hard</option>
+              </select>
+            </label>
+
+            <label class="field small">
+              <span class="field-label">Type</span>
+              <select class="field-input">
+                <option>Multiple choice</option>
+                <option>Short answer</option>
+                <option>Mixed</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="button">Generate quiz</button>
+            <button class="btn btn-secondary" type="button">Generate demo quiz</button>
+            <button class="btn btn-ghost" type="button">Clear selection</button>
+          </div>
+
+          <p class="tinyhint">
+            Security note: never put API keys in the browser. If you use AI later, call it via a backend/proxy.
+          </p>
+        </div>
+
+        <div class="quiz-right" aria-label="Quiz preview">
+          <h4 class="mini-title">Preview</h4>
+
+          <article class="quiz-card">
+            <p class="quiz-q">
+              <strong>Q1.</strong> What is a loop, and when would you use it?
+            </p>
+            <div class="quiz-answers">
+              <label class="answer">
+                <input type="radio" name="q1" />
+                <span>A loop repeats a block of code while a condition is true.</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="q1" />
+                <span>A loop stores data in memory permanently.</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="q1" />
+                <span>A loop converts JSON into HTML.</span>
+              </label>
+            </div>
+          </article>
+
+          <article class="quiz-card">
+            <p class="quiz-q">
+              <strong>Q2.</strong> What does <code>git commit</code> do?
+            </p>
+            <div class="quiz-answers">
+              <label class="answer">
+                <input type="radio" name="q2" />
+                <span>Saves a snapshot of changes to the repository history.</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="q2" />
+                <span>Deletes the repository.</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="q2" />
+                <span>Uploads code directly to production servers.</span>
+              </label>
+            </div>
+          </article>
+
+          <div class="form-actions">
+            <button class="btn btn-small" type="button">Submit (demo)</button>
+            <button class="btn btn-small btn-ghost" type="button">Save quiz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Your Space • Track learning + confidence • Quizzes can be template-based or AI-powered later.
+      </p>
+    </footer>
+  </main>
+
+
+  <!-- AMBER — Future Map Page -->
+  <main class="amber-map" aria-label="Amber Future Map page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Future Map — connect what you know to where you’re going</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#space">Your Space</a>
+        <a class="nav-link" href="#map" aria-current="page">Future Map</a>
+        <a class="nav-link" href="#goals">Goals</a>
+        <a class="nav-link" href="#refresh">Refresh</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="page-head" aria-labelledby="map-title">
+      <div class="page-head-left">
+        <h2 id="map-title" class="page-title">Future Map</h2>
+        <p class="page-subtitle">
+          Turn “random topics” into a meaningful path. See why you’re learning each step and what to do next.
+        </p>
+      </div>
+
+      <aside class="page-head-right" aria-label="Path settings">
+        <div class="statline">
+          <span class="statlabel">Track</span>
+          <strong class="statvalue" id="trackName">Backend Developer</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Level</span>
+          <strong class="statvalue" id="trackLevel">Beginner</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Next milestone</span>
+          <strong class="statvalue" id="nextMilestone">Build a REST API</strong>
+        </div>
+        <p class="tinyhint">(These become dynamic with JS later.)</p>
+      </aside>
+    </section>
+
+    <section class="panel" aria-labelledby="big-picture-title">
+      <header class="panel-head">
+        <h3 id="big-picture-title" class="panel-title">Big picture</h3>
+        <p class="panel-hint">
+          You’re not “just learning loops.” You’re building the foundations for real skills.
+        </p>
+      </header>
+
+      <div class="big-picture">
+        <article class="callout" aria-label="What you know">
+          <h4 class="mini-title">You already know</h4>
+          <div class="chip-row" aria-label="Learned topics">
+            <span class="chip chip-good">Variables</span>
+            <span class="chip chip-good">Conditionals</span>
+            <span class="chip chip-good">Loops</span>
+            <span class="chip chip-mid">Functions</span>
+            <span class="chip chip-warn">Git basics</span>
+          </div>
+          <p class="tinyhint">Tip: low-confidence topics stay visible so you can review them.</p>
+        </article>
+
+        <article class="callout" aria-label="Where you’re going">
+          <h4 class="mini-title">Where you’re going</h4>
+          <p class="callout-text">
+            <strong>Backend Developer</strong> → You’ll build services that receive requests, process data,
+            and return responses (APIs). You’ll work with databases, authentication, and deployment.
+          </p>
+
+          <dl class="milestone-grid" aria-label="Milestones">
+            <div class="milestone">
+              <dt class="milestone-label">Milestone 1</dt>
+              <dd class="milestone-value">Write clean programs</dd>
+            </div>
+            <div class="milestone">
+              <dt class="milestone-label">Milestone 2</dt>
+              <dd class="milestone-value">Build an API</dd>
+            </div>
+            <div class="milestone">
+              <dt class="milestone-label">Milestone 3</dt>
+              <dd class="milestone-value">Connect a database</dd>
+            </div>
+            <div class="milestone">
+              <dt class="milestone-label">Milestone 4</dt>
+              <dd class="milestone-value">Deploy a project</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="next-steps-title">
+      <header class="panel-head">
+        <h3 id="next-steps-title" class="panel-title">Your next steps</h3>
+        <p class="panel-hint">
+          Focus on one step at a time. Amber recommends steps you’ve unlocked via prerequisites.
+        </p>
+      </header>
+
+      <ol class="steps" aria-label="Recommended next steps">
+        <li class="step">
+          <div class="step-main">
+            <h4 class="step-title">Arrays / Lists</h4>
+            <p class="step-why">
+              <strong>Why:</strong> Arrays are the most common way to store multiple values. You’ll use them in
+              APIs, algorithms, and data processing.
+            </p>
+
+            <div class="step-meta">
+              <span class="tag">Estimated time: 45–90 min</span>
+              <span class="tag tag-good">Unlocked</span>
+              <span class="tag">Confidence target: 3/5</span>
+            </div>
+
+            <details class="details">
+              <summary>Show prerequisites & micro tasks</summary>
+              <div class="details-body">
+                <p class="details-title">Prerequisites</p>
+                <ul class="checklist">
+                  <li>✅ Variables</li>
+                  <li>✅ Loops</li>
+                </ul>
+
+                <p class="details-title">Micro tasks</p>
+                <ul class="bullets">
+                  <li>Create an array and print all elements</li>
+                  <li>Find the max value in an array</li>
+                  <li>Count how many values match a condition</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-actions" role="group" aria-label="Step actions">
+            <button class="btn btn-primary" type="button">Start step</button>
+            <button class="btn btn-secondary" type="button">Add to goals</button>
+            <button class="btn btn-ghost" type="button">Mark as done</button>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step-main">
+            <h4 class="step-title">Debugging basics</h4>
+            <p class="step-why">
+              <strong>Why:</strong> Debugging is the skill that saves you hours. Beginners grow fastest when they
+              can find and fix bugs without panic.
+            </p>
+
+            <div class="step-meta">
+              <span class="tag">Estimated time: 30–60 min</span>
+              <span class="tag tag-good">Unlocked</span>
+              <span class="tag">Confidence target: 4/5</span>
+            </div>
+
+            <details class="details">
+              <summary>Show prerequisites & micro tasks</summary>
+              <div class="details-body">
+                <p class="details-title">Prerequisites</p>
+                <ul class="checklist">
+                  <li>✅ Variables</li>
+                  <li>✅ Conditionals</li>
+                </ul>
+
+                <p class="details-title">Micro tasks</p>
+                <ul class="bullets">
+                  <li>Read an error message and explain it in one sentence</li>
+                  <li>Add print statements to locate where logic breaks</li>
+                  <li>Try a debugger (breakpoint) once</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-actions" role="group" aria-label="Step actions">
+            <button class="btn btn-primary" type="button">Start step</button>
+            <button class="btn btn-secondary" type="button">Add to goals</button>
+            <button class="btn btn-ghost" type="button">Mark as done</button>
+          </div>
+        </li>
+
+        <li class="step step-locked">
+          <div class="step-main">
+            <h4 class="step-title">HTTP basics</h4>
+            <p class="step-why">
+              <strong>Why:</strong> HTTP is how the web communicates. If you want backend, this is your “language”
+              for requests and responses.
+            </p>
+
+            <div class="step-meta">
+              <span class="tag">Estimated time: 60–120 min</span>
+              <span class="tag tag-warn">Locked</span>
+              <span class="tag">Needs: Functions</span>
+            </div>
+
+            <details class="details">
+              <summary>Show prerequisites & micro tasks</summary>
+              <div class="details-body">
+                <p class="details-title">Prerequisites</p>
+                <ul class="checklist">
+                  <li>✅ Variables</li>
+                  <li>✅ Loops</li>
+                  <li>⬜ Functions</li>
+                </ul>
+
+                <p class="details-title">Micro tasks (once unlocked)</p>
+                <ul class="bullets">
+                  <li>Explain request vs response with a real example</li>
+                  <li>List common HTTP methods (GET/POST/PUT/DELETE)</li>
+                  <li>Write a tiny “fake API” response as JSON</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+
+          <div class="step-actions" role="group" aria-label="Step actions">
+            <button class="btn btn-primary" type="button" disabled>Start step</button>
+            <button class="btn btn-secondary" type="button" disabled>Add to goals</button>
+            <button class="btn btn-ghost" type="button">Review prerequisite</button>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="panel" aria-labelledby="map-view-title">
+      <header class="panel-head">
+        <h3 id="map-view-title" class="panel-title">Map view</h3>
+        <p class="panel-hint">
+          A simple “skill tree” preview. Later you can generate this from your topic graph.
+        </p>
+      </header>
+
+      <div class="map-view" role="region" aria-label="Skill tree">
+        <div class="map-col">
+          <p class="map-col-title">Foundations</p>
+          <div class="node node-done">Variables</div>
+          <div class="node node-done">Conditionals</div>
+          <div class="node node-done">Loops</div>
+          <div class="node node-mid">Functions</div>
+        </div>
+
+        <div class="map-col">
+          <p class="map-col-title">Core skills</p>
+          <div class="node node-next">Arrays / Lists</div>
+          <div class="node node-next">Debugging</div>
+          <div class="node node-locked">Recursion</div>
+        </div>
+
+        <div class="map-col">
+          <p class="map-col-title">Backend</p>
+          <div class="node node-locked">HTTP</div>
+          <div class="node node-locked">REST + JSON</div>
+          <div class="node node-locked">SQL basics</div>
+        </div>
+
+        <div class="map-col">
+          <p class="map-col-title">Milestone</p>
+          <div class="node node-goal">Build a REST API</div>
+          <div class="node node-goal">Connect a DB</div>
+          <div class="node node-goal">Deploy</div>
+        </div>
+      </div>
+
+      <div class="legend" aria-label="Legend">
+        <span class="legend-item"><span class="dot dot-done"></span> Done</span>
+        <span class="legend-item"><span class="dot dot-mid"></span> In progress</span>
+        <span class="legend-item"><span class="dot dot-next"></span> Recommended</span>
+        <span class="legend-item"><span class="dot dot-locked"></span> Locked</span>
+        <span class="legend-item"><span class="dot dot-goal"></span> Milestone</span>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Future Map • Shows “why” + “what next” • Can be powered by a prerequisite graph + your learned topics.
+      </p>
+    </footer>
+  </main>
+
+
+  <!-- AMBER — Goals Page -->
+  <main class="amber-goals" aria-label="Amber Goals page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Goals — turn intentions into steady progress</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#space">Your Space</a>
+        <a class="nav-link" href="#map">Future Map</a>
+        <a class="nav-link" href="#goals" aria-current="page">Goals</a>
+        <a class="nav-link" href="#refresh">Refresh</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="page-head" aria-labelledby="goals-title">
+      <div class="page-head-left">
+        <h2 id="goals-title" class="page-title">Goals</h2>
+        <p class="page-subtitle">
+          Write goals that fit your energy. Small, realistic goals keep your streak alive.
+        </p>
+      </div>
+
+      <aside class="page-head-right" aria-label="Goals overview">
+        <div class="statline">
+          <span class="statlabel">Today</span>
+          <strong class="statvalue">0 / 3 done</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">This week</span>
+          <strong class="statvalue">2 / 10 done</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Focus</span>
+          <strong class="statvalue">Consistency</strong>
+        </div>
+        <p class="tinyhint">(Static preview — becomes dynamic later.)</p>
+      </aside>
+    </section>
+
+    <section class="panel" aria-labelledby="create-goal-title">
+      <header class="panel-head">
+        <h3 id="create-goal-title" class="panel-title">Create a goal</h3>
+        <p class="panel-hint">
+          Be specific and gentle. You can always adjust later.
+        </p>
+      </header>
+
+      <form class="form" aria-label="Create goal form">
+        <div class="form-grid">
+          <label class="field">
+            <span class="field-label">Goal</span>
+            <input
+              class="field-input"
+              type="text"
+              placeholder="e.g., Study arrays for 20 minutes"
+              required
+            />
+          </label>
+
+          <label class="field">
+            <span class="field-label">Period</span>
+            <select class="field-input">
+              <option>Today</option>
+              <option selected>This week</option>
+              <option>This month</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Category</span>
+            <select class="field-input">
+              <option>Study</option>
+              <option>Practice</option>
+              <option>Review</option>
+              <option>Project</option>
+              <option>Well-being</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field-label">Estimated effort</span>
+            <select class="field-input">
+              <option>5–10 min</option>
+              <option selected>15–30 min</option>
+              <option>45–60 min</option>
+              <option>90+ min</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Notes (optional)</span>
+          <textarea
+            class="field-input"
+            rows="3"
+            placeholder="Why this goal matters, or what might make it hard"
+          ></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Add goal</button>
+          <button class="btn btn-secondary" type="button">Suggest goals (AI)</button>
+          <button class="btn btn-ghost" type="reset">Clear</button>
+        </div>
+
+        <p class="tinyhint">
+          AI suggestions can be based on your learned topics and confidence levels (added later).
+        </p>
+      </form>
+    </section>
+
+    <section class="panel" aria-labelledby="board-title">
+      <header class="panel-head">
+        <h3 id="board-title" class="panel-title">Your goals</h3>
+        <p class="panel-hint">
+          Check off what you complete — progress is progress.
+        </p>
+      </header>
+
+      <div class="toolbar" role="region" aria-label="Goal filters">
+        <label class="field small">
+          <span class="field-label">View</span>
+          <select class="field-input">
+            <option>Today</option>
+            <option>This week</option>
+            <option>This month</option>
+            <option>All</option>
+          </select>
+        </label>
+
+        <label class="field small">
+          <span class="field-label">Category</span>
+          <select class="field-input">
+            <option>All</option>
+            <option>Study</option>
+            <option>Practice</option>
+            <option>Review</option>
+            <option>Project</option>
+            <option>Well-being</option>
+          </select>
+        </label>
+
+        <label class="field small">
+          <span class="field-label">Status</span>
+          <select class="field-input">
+            <option>All</option>
+            <option>Not done</option>
+            <option>Done</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="goals-board">
+        <section class="goals-col" aria-labelledby="today-goals">
+          <h4 id="today-goals" class="col-title">Today</h4>
+
+          <article class="goal-card">
+            <div class="goal-main">
+              <label class="goal-check">
+                <input type="checkbox" />
+                <span class="goal-text">Read about arrays (15 min)</span>
+              </label>
+              <p class="goal-meta">Study • 15–30 min</p>
+            </div>
+            <div class="goal-actions">
+              <button class="btn btn-small" type="button">Edit</button>
+              <button class="btn btn-small btn-ghost" type="button">Delete</button>
+            </div>
+          </article>
+
+          <article class="goal-card">
+            <div class="goal-main">
+              <label class="goal-check">
+                <input type="checkbox" />
+                <span class="goal-text">Fix one bug without help</span>
+              </label>
+              <p class="goal-meta">Practice • 5–10 min</p>
+            </div>
+            <div class="goal-actions">
+              <button class="btn btn-small" type="button">Edit</button>
+              <button class="btn btn-small btn-ghost" type="button">Delete</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="goals-col" aria-labelledby="week-goals">
+          <h4 id="week-goals" class="col-title">This week</h4>
+
+          <article class="goal-card">
+            <div class="goal-main">
+              <label class="goal-check">
+                <input type="checkbox" checked />
+                <span class="goal-text">Understand loops basics</span>
+              </label>
+              <p class="goal-meta">Study • 45–60 min</p>
+            </div>
+            <div class="goal-actions">
+              <button class="btn btn-small" type="button">Edit</button>
+              <button class="btn btn-small btn-ghost" type="button">Delete</button>
+            </div>
+          </article>
+
+          <article class="goal-card">
+            <div class="goal-main">
+              <label class="goal-check">
+                <input type="checkbox" />
+                <span class="goal-text">Write 5 loop exercises</span>
+              </label>
+              <p class="goal-meta">Practice • 90+ min</p>
+            </div>
+            <div class="goal-actions">
+              <button class="btn btn-small" type="button">Edit</button>
+              <button class="btn btn-small btn-ghost" type="button">Delete</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="goals-col" aria-labelledby="month-goals">
+          <h4 id="month-goals" class="col-title">This month</h4>
+
+          <article class="goal-card">
+            <div class="goal-main">
+              <label class="goal-check">
+                <input type="checkbox" />
+                <span class="goal-text">Build a small console project</span>
+              </label>
+              <p class="goal-meta">Project • Multiple sessions</p>
+            </div>
+            <div class="goal-actions">
+              <button class="btn btn-small" type="button">Edit</button>
+              <button class="btn btn-small btn-ghost" type="button">Delete</button>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="reflection-title">
+      <header class="panel-head">
+        <h3 id="reflection-title" class="panel-title">Reflection</h3>
+        <p class="panel-hint">
+          Short reflections help you learn faster and reduce burnout.
+        </p>
+      </header>
+
+      <div class="reflection-grid">
+        <label class="field">
+          <span class="field-label">What went well?</span>
+          <textarea class="field-input" rows="3" placeholder="Small wins count."></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field-label">What was hard?</span>
+          <textarea class="field-input" rows="3" placeholder="Be honest, not harsh."></textarea>
+        </label>
+
+        <label class="field">
+          <span class="field-label">One adjustment for tomorrow</span>
+          <textarea class="field-input" rows="2" placeholder="Make it tiny."></textarea>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="button">Save reflection</button>
+        <button class="btn btn-ghost" type="button">Skip for today</button>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Goals • Daily, weekly, monthly • Designed to support consistency, not pressure.
+      </p>
+    </footer>
+  </main>
+
+
+  <!-- AMBER — Refresh Page -->
+  <main class="amber-refresh" aria-label="Amber Refresh page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Refresh — reset your mind without leaving learning</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#space">Your Space</a>
+        <a class="nav-link" href="#map">Future Map</a>
+        <a class="nav-link" href="#goals">Goals</a>
+        <a class="nav-link" href="#refresh" aria-current="page">Refresh</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="page-head" aria-labelledby="refresh-title">
+      <div class="page-head-left">
+        <h2 id="refresh-title" class="page-title">Refresh</h2>
+        <p class="page-subtitle">
+          Take a mental reset without breaking your flow. Gentle inspiration, not distraction.
+        </p>
+      </div>
+
+      <aside class="page-head-right" aria-label="Refresh intent">
+        <div class="statline">
+          <span class="statlabel">Mode</span>
+          <strong class="statvalue">Light reset</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Suggested time</span>
+          <strong class="statvalue">1–5 minutes</strong>
+        </div>
+        <p class="tinyhint">
+          This page is designed to help you return to studying calmer and clearer.
+        </p>
+      </aside>
+    </section>
+
+    <section class="panel" aria-labelledby="modes-title">
+      <header class="panel-head">
+        <h3 id="modes-title" class="panel-title">Choose a refresh mode</h3>
+        <p class="panel-hint">
+          Pick what you need right now. There’s no “wrong” choice.
+        </p>
+      </header>
+
+      <div class="modes-grid">
+        <article class="mode-card">
+          <h4 class="mode-title">🧠 Inspire</h4>
+          <p class="mode-text">
+            Gentle reminders of why what you’re learning matters, connected to real-world use.
+          </p>
+          <button class="btn btn-small" type="button">Show inspiration</button>
+        </article>
+
+        <article class="mode-card">
+          <h4 class="mode-title">🌱 Tiny challenge</h4>
+          <p class="mode-text">
+            One very small prompt related to what you’ve already learned. No pressure.
+          </p>
+          <button class="btn btn-small" type="button">Give me one</button>
+        </article>
+
+        <article class="mode-card">
+          <h4 class="mode-title">😮‍💨 Breathe</h4>
+          <p class="mode-text">
+            A short breathing pause to release tension and reset your focus.
+          </p>
+          <button class="btn btn-small" type="button">Start 60s reset</button>
+        </article>
+
+        <article class="mode-card">
+          <h4 class="mode-title">🔍 Big picture</h4>
+          <p class="mode-text">
+            See how a topic you learned fits into a larger system or career path.
+          </p>
+          <button class="btn btn-small" type="button">Show context</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="feed-title">
+      <header class="panel-head">
+        <h3 id="feed-title" class="panel-title">Inspiration feed</h3>
+        <p class="panel-hint">
+          Curated, calm cards — like Pinterest, but for your learning journey.
+        </p>
+      </header>
+
+      <div class="feed-grid" aria-label="Inspiration cards">
+        <article class="feed-card">
+          <p class="feed-kicker">Why this matters</p>
+          <h4 class="feed-title">Loops are everywhere</h4>
+          <p class="feed-text">
+            Loops are used in servers to process requests, in databases to scan records,
+            and in games to update every frame. You’re learning a universal tool.
+          </p>
+          <span class="feed-tag">Based on: Loops</span>
+        </article>
+
+        <article class="feed-card">
+          <p class="feed-kicker">Confidence boost</p>
+          <h4 class="feed-title">Feeling stuck is normal</h4>
+          <p class="feed-text">
+            Confusion doesn’t mean you’re bad at coding. It usually means you’re exactly
+            at the point where learning happens.
+          </p>
+          <span class="feed-tag">Mindset</span>
+        </article>
+
+        <article class="feed-card">
+          <p class="feed-kicker">Micro challenge</p>
+          <h4 class="feed-title">One-minute exercise</h4>
+          <p class="feed-text">
+            Without writing code, explain in words what a function does and why it’s useful.
+          </p>
+          <span class="feed-tag">Tiny task</span>
+        </article>
+
+        <article class="feed-card">
+          <p class="feed-kicker">Big picture</p>
+          <h4 class="feed-title">From functions to APIs</h4>
+          <p class="feed-text">
+            Functions are the building blocks of APIs. When you write an endpoint,
+            you’re really writing a function that talks to the world.
+          </p>
+          <span class="feed-tag">Career context</span>
+        </article>
+      </div>
+
+      <div class="feed-actions" role="group" aria-label="Feed actions">
+        <button class="btn btn-secondary" type="button">Load more</button>
+        <button class="btn btn-ghost" type="button">Refresh feed</button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="break-title">
+      <header class="panel-head">
+        <h3 id="break-title" class="panel-title">Break mode</h3>
+        <p class="panel-hint">
+          A short pause can help your brain consolidate what you learned.
+        </p>
+      </header>
+
+      <div class="break-box" aria-label="Break timer">
+        <p class="break-instruction">
+          Sit comfortably. Inhale through your nose for 4 seconds, exhale through your mouth for 6 seconds.
+        </p>
+
+        <div class="break-timer" aria-hidden="true">60</div>
+
+        <p class="break-hint">
+          (Timer becomes active once JavaScript is added.)
+        </p>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="button">Start break</button>
+          <button class="btn btn-ghost" type="button">Skip</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="return-title">
+      <header class="panel-head">
+        <h3 id="return-title" class="panel-title">Before you go back</h3>
+        <p class="panel-hint">
+          One small prompt to help you re-enter learning gently.
+        </p>
+      </header>
+
+      <blockquote class="return-quote">
+        “What is the smallest next thing I can do right now?”
+      </blockquote>
+
+      <div class="return-actions">
+        <button class="btn btn-small" type="button">Go to next step</button>
+        <button class="btn btn-small btn-ghost" type="button">Open goals</button>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Refresh • Designed to reduce burnout and keep momentum without guilt.
+      </p>
+    </footer>
+  </main>
+
+
+  <!-- AMBER — Contact Us Page -->
+  <main class="amber-contact" aria-label="Amber Contact page">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">A</div>
+        <div class="brand-text">
+          <h1 class="brand-name">Amber</h1>
+          <p class="brand-tagline">Contact — feedback, support, and collaboration</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#space">Your Space</a>
+        <a class="nav-link" href="#map">Future Map</a>
+        <a class="nav-link" href="#goals">Goals</a>
+        <a class="nav-link" href="#refresh">Refresh</a>
+        <a class="nav-link" href="#contact" aria-current="page">Contact</a>
+      </nav>
+    </header>
+
+    <section class="page-head" aria-labelledby="contact-title">
+      <div class="page-head-left">
+        <h2 id="contact-title" class="page-title">Contact us</h2>
+        <p class="page-subtitle">
+          We’d love to hear from you. Send feedback, report a bug, or suggest a feature.
+        </p>
+      </div>
+
+      <aside class="page-head-right" aria-label="Contact overview">
+        <div class="statline">
+          <span class="statlabel">Response time</span>
+          <strong class="statvalue">Within 24–48h</strong>
+        </div>
+        <div class="statline">
+          <span class="statlabel">Best for</span>
+          <strong class="statvalue">Bugs • Ideas • Partnerships</strong>
+        </div>
+        <p class="tinyhint">(Hackathon demo: form can be “mock send” for now.)</p>
+      </aside>
+    </section>
+
+    <section class="contact-grid" aria-label="Contact content">
+      <section class="panel" aria-labelledby="form-title">
+        <header class="panel-head">
+          <h3 id="form-title" class="panel-title">Send a message</h3>
+          <p class="panel-hint">
+            Please include details (what happened, where, and what you expected).
+          </p>
+        </header>
+
+        <form class="form" aria-label="Contact form">
+          <div class="form-grid">
+            <label class="field">
+              <span class="field-label">Name</span>
+              <input class="field-input" type="text" name="name" placeholder="Your name" autocomplete="name" />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Email</span>
+              <input
+                class="field-input"
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Topic</span>
+              <select class="field-input" name="topic">
+                <option>General feedback</option>
+                <option>Bug report</option>
+                <option>Feature request</option>
+                <option>Partnership / collaboration</option>
+                <option>Other</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Priority</span>
+              <select class="field-input" name="priority">
+                <option>Low</option>
+                <option selected>Normal</option>
+                <option>High</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span class="field-label">Message</span>
+            <textarea
+              class="field-input"
+              name="message"
+              rows="6"
+              placeholder="Tell us what you think. If it’s a bug: steps to reproduce + screenshots."
+              required
+            ></textarea>
+          </label>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Send message</button>
+            <button class="btn btn-ghost" type="reset">Clear</button>
+          </div>
+
+          <p class="tinyhint">
+            By sending, you agree we may use your feedback to improve the product (no personal data shared).
+          </p>
+        </form>
+      </section>
+
+      <aside class="panel" aria-labelledby="info-title">
+        <header class="panel-head">
+          <h3 id="info-title" class="panel-title">Other ways to reach us</h3>
+          <p class="panel-hint">Use the quickest channel for your case.</p>
+        </header>
+
+        <div class="info-block" aria-label="Contact methods">
+          <div class="info-item">
+            <h4 class="mini-title">📧 Email</h4>
+            <p class="info-text">
+              <a href="mailto:hello@amberapp.dev" class="link">hello@amberapp.dev</a>
+            </p>
+            <p class="tinyhint">For feedback, support, and partnerships.</p>
+          </div>
+
+          <div class="info-item">
+            <h4 class="mini-title">🐞 Bug reports</h4>
+            <p class="info-text">
+              <a href="#" class="link">GitHub Issues (demo link)</a>
+            </p>
+            <p class="tinyhint">Include steps to reproduce + environment details.</p>
+          </div>
+
+          <div class="info-item">
+            <h4 class="mini-title">💡 Feature requests</h4>
+            <p class="info-text">
+              <a href="#" class="link">Feature board (demo link)</a>
+            </p>
+            <p class="tinyhint">Tell us the problem you want to solve, not only the solution.</p>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="social" aria-label="Social links">
+          <a class="btn btn-small btn-ghost" href="#" aria-label="Project repository">GitHub</a>
+          <a class="btn btn-small btn-ghost" href="#" aria-label="Project demo video">Demo video</a>
+          <a class="btn btn-small btn-ghost" href="#" aria-label="Project slides">Slides</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel" aria-labelledby="faq-title">
+      <header class="panel-head">
+        <h3 id="faq-title" class="panel-title">FAQ</h3>
+        <p class="panel-hint">Quick answers about the demo.</p>
+      </header>
+
+      <div class="faq">
+        <details class="details">
+          <summary>Is this a real product or a hackathon demo?</summary>
+          <div class="details-body">
+            This is a hackathon demo. Some features may be mock or template-based. We’re validating the idea.
+          </div>
+        </details>
+
+        <details class="details">
+          <summary>Will you store my data?</summary>
+          <div class="details-body">
+            In this demo version, data can be stored locally in your browser (localStorage). A full version would use secure accounts.
+          </div>
+        </details>
+
+        <details class="details">
+          <summary>Can I contribute?</summary>
+          <div class="details-body">
+            Yes! We welcome contributions. Reach out via email or the repository link.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+      <p class="footer-text">
+        Contact • Thank you for helping Amber become kinder and more motivating for beginner developers.
+      </p>
+    </footer>
+  </main>
+
+</body>
+</html>
